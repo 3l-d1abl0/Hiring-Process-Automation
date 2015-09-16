@@ -7,7 +7,7 @@
 			<link rel="stylesheet" type="text/css" href="css/main.css">
 			<link rel="stylesheet" type="text/css" href="css/nprogress.css">
 			<script type="text/javascript"src="js/jquery.js"></script>
-			<script type="text/javascript"src="js/demofback.js"></script>
+			<script type="text/javascript"src="js/feedback.js"></script>
 			<script type="text/javascript"src="js/nprogress.js"></script>
 		</head>
 <body>
