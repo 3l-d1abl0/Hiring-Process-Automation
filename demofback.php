@@ -15,7 +15,6 @@
 			NProgress.start();
 	</script>
 	<div id="top-bar">
-
 	</div>
 	
 
@@ -29,7 +28,8 @@
 	<?php
 
 		if(!isset($_GET['check'])){
-				echo "Err...";
+				echo "<div class='sche'> <center><h4> Wrong Request !</h4><br></center></div>";
+				echo "<script>NProgress.done(); </script>";
 				return 0;
 		}
 
@@ -43,7 +43,7 @@
 
 		//Check if its a valid Interview id.
 		
-		$qq="SELECT count(*) FROM `interview` WHERE id=(?)";
+		$qq="SELECT count(*) FROM interview WHERE id=(?)";
 		if($st=mysqli_prepare($con,$qq)){
 
 			mysqli_stmt_bind_param($st,"s",$inter_id);
@@ -55,7 +55,8 @@
 			while(mysqli_stmt_fetch($st)){
 
 					if($count==0){
-						echo "No Such Interview Found !";
+						echo "<div class='sche'> <center><h4> That interview Does not Exists !</h4><br></center></div>";
+						echo "<script>NProgress.done(); </script>";
 						mysqli_stmt_close($st);
 						return 0;
 					}
@@ -63,73 +64,68 @@
 		}
 		else{
 				$error=mysqli_error($con);
-				echo "Prepare Error While checking interview id !<br>";
+				echo "<div class='sche'> <center><h4> Prepare Error While checking interview id !</h4><br></center></div>";
 				echo $error;
+				echo "<script>NProgress.done(); </script>";
 				return 0;
 
 		}
 		
 	?>
-		<div id="detail">
+
+	<div id="detail">
 	<?php
 		//echo "Interiew Details: <br>";
 		//echo $inter_id;
 
 
-				///Candidate Details
-				$q="SELECT name,age,city,coll,role,dt,res,eval FROM `interview` WHERE id=(?)";
+		///Candidate Details
+		$q="SELECT name,age,city,coll,role,dt,res,eval FROM interview WHERE id=(?)";
 
-				if($stmt=mysqli_prepare($con,$q)){
+			if($stmt=mysqli_prepare($con,$q)){
 					
+					mysqli_stmt_bind_param($stmt, "s",$inter_id);
 
-						mysqli_stmt_bind_param($stmt, "s",$inter_id);
+					mysqli_stmt_execute($stmt);
 
+					mysqli_stmt_bind_result($stmt, $name, $age, $city, $coll, $role, $dt,$res,$eval);
 
-						mysqli_stmt_execute($stmt);
+					while (mysqli_stmt_fetch($stmt)) {
 
-						mysqli_stmt_bind_result($stmt, $name, $age, $city, $coll, $role, $dt,$res,$eval);
+						$fn=explode("-",$name);
 
+ 						echo "<span class='holder'>Candidate Name : </span> <span class='value'>".$fn[0]."  ".$fn[1]."</span><br>";
+ 						echo "<span class='holder'>Age : </span> <span class='value'>".$age."</span><br>";
+ 						echo "<span class='holder'>College : </span> <span class='value'>".$coll."</span><br>";
+ 						echo "<span class='holder'>City : </span> <span class='value'>".$city."</span><br>";
+ 						echo "<span class='holder'>For Profile: </span> <span class='value'>".$role."</span><br>";
+ 						echo "<span class='holder'>Resume</span> <span class='value'><a href='".$res."' target='_blank' >Click Here</a></span><br>";
+ 						echo "<span class='holder'>Interview held on: </span><span class='value'>".date("d/m/Y",$dt)."</span><br>";
+						echo "<span class='holder'>Time: </span><span class='value'>".date("h:i:s",$dt)."</span><br>";
+						echo "<span class='holder'>Interviewer: </span><span class='value'>".$details[0]."</span>";
+    				}
 
-						while (mysqli_stmt_fetch($stmt)) {
-
-							$fn=explode("-",$name);
-
- 							echo "<span class='holder'>Candidate Name : </span> <span class='value'>".$fn[0]."  ".$fn[1]."</span><br>";
- 							echo "<span class='holder'>Age : </span> <span class='value'>".$age."</span><br>";
- 							echo "<span class='holder'>College : </span> <span class='value'>".$coll."</span><br>";
- 							echo "<span class='holder'>City : </span> <span class='value'>".$city."</span><br>";
- 							echo "<span class='holder'>For Profile: </span> <span class='value'>".$role."</span><br>";
- 							echo "<span class='holder'>Resume</span> <span class='value'><a href='".$res."' target='_blank' >Click Here</a></span><br>";
- 							echo "<span class='holder'>Interview held on: </span><span class='value'>".date("d/m/Y",$dt)."</span><br>";
-							echo "<span class='holder'>Time: </span><span class='value'>".date("h:i:s",$dt)."</span><br>";
-							echo "<span class='holder'>Interviewer: </span><span class='value'>".$details[0]."</span>";
-    					}
-
-        						
-    					mysqli_stmt_close($stmt);
+        			mysqli_stmt_close($stmt);
 
 
-    					if($eval!=0){
+    				if($eval!=0){
     						echo "<br><br><div class='sche'>This profile has been Evaluated !</div>";
-
-    					?>
-    					<script >
-							NProgress.done();
-						</script>
-    					<?php	
-    						return 0;
-    					}
+    						echo "<script >	NProgress.done(); </script>";
+							return 0;
+    				}
 
     					//echo "No Errrr !";
 
-				}
-				else{
+			}
+			else{
 					
 						$error=mysqli_error($con);
-						echo "Prepare Error Getting Candidate Details !<br>";
+						echo "<br><br><div class='sche'> Prepare Error Getting Candidate Details !</div><br>";
 						echo $error;
+						echo "<script >	NProgress.done(); </script>";
+						return 0;
 
-				}
+			}
 
 
 				/*
@@ -156,16 +152,15 @@
 						}
 				*/
 
-
-
-
-
-	 ?>
+	?>
 	</div>
 
 
 <div id="fmain">
+			
 			<div class='sche'>Answer the following Question on a scale of 1-5:</div>
+    
+			<!-- Feedback form -->
     <form id="fform" name="fform" action="subf.php"  method="POST">
 
 			<div id="quest" class="quest">
@@ -209,7 +204,7 @@
 							 <input type='text' value='".$inter_id."' id='interview_id' class='invisible' name='interview_id'></input><br>";
 
 						//echo $qq;
-							 echo $kk;
+						echo $kk;
 
 
 			 ?>
@@ -220,15 +215,13 @@
 
 			<div id="newqerr">
 			</div>
-			
-			<br>
 
 			<div id="addquestion">
 				Type in your Question:<br>
-				<textarea id="newq" row="100" col="3" name="newq"> </textarea><br><br>
+				<textarea id="newq" row="10" col="3" name="newq"> </textarea><br><br>
 				
-				<input type="button" id="addit" name="addit" value="Add It"></input><br><br>
-				<input type="button" id="doneadd" name="doneadd" value="Done Adding?"></input>
+				<input type="button" id="addit" name="addit" value="Add It !"></input><br><br>
+				<input type="button" id="doneadd" name="doneadd" value="Done Adding"></input>
 			</div>
 
 
@@ -240,7 +233,7 @@
 			</div>
 			
 
-			<br><br>
+			<br>
 
 			<div id="nxtround">
 
@@ -249,7 +242,7 @@
 
 			</div>
 
-				<br><br>
+			<br><br>
 			<input type="submit" name="submit" value="Submit" id="sub"></input>
 
 	</form>
@@ -258,7 +251,7 @@
 
 <script >
 			NProgress.done();
-	</script>
+</script>
 
 </body>
 </html>

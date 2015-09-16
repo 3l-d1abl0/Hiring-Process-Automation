@@ -7,12 +7,14 @@
 		else{
 
 			$qna=array();
-			$maxq=$_POST['maxq'];
-			$addi=$_POST['addi'];
-			$i_id=$_POST['interview_id'];
+			$maxq=$_POST['maxq'];				//No. of Default Questions
+			$addi=$_POST['addi'];				//No. of additional questions
+			$i_id=$_POST['interview_id'];		//Unique interview Id
 
+			
 			$temp=explode("-", $i_id);
 			$new_table=$temp[0].$temp[1];
+
 
 			for($i=1;$i<=($maxq+$addi);$i++){
 				$qna[$i]=$_POST['q-'.$i.''];
@@ -35,7 +37,7 @@
 
 			if($hire=="no" && $verdict=="err"){
 				echo "Error: Try Again with Decisions	!!!";
-				return;
+				return 0;
 			 }
 
 
@@ -74,7 +76,7 @@
 
 				 ///Candidate Details
 
-			 	$q="SELECT name,age,city,coll,role,dt,eval FROM `interview` WHERE id=(?)";
+			 	$q="SELECT name,age,city,coll,role,dt,eval FROM interview WHERE id=(?)";
 
 				if($stmt=mysqli_prepare($con,$q)){
 					
@@ -486,7 +488,7 @@
 ?>
 
 <script >
-			//NProgress.done();
+			NProgress.done();
 	</script>
 </body>
 </html>
