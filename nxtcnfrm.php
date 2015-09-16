@@ -132,7 +132,7 @@
 						if (mysqli_stmt_execute($stmt)) {
         						
 									echo "<div class='sche'> <center><h4> Interview Scheduled !</h4>"."<br>";
-									echo "Feedback: <a href='demofback.php?check=".$id."' target='_blank'>Link</a>"."<br><center></div>";
+									echo "Feedback: <a href='feedback.php?check=".$id."' target='_blank'>Link</a>"."<br><center></div>";
 
     					}
     					else{
