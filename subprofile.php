@@ -4,7 +4,7 @@
 
 	
 	if(!isset($_POST['submit'])){
-		echo "NOPost";
+		//echo "NOPost";
 	}
 	else{
 
@@ -12,30 +12,27 @@
 		$allext=array("pdf","doc","docx");
 
 
-		$role=$_POST['roles'];
-		$fname=$_POST['fname'];
-		$lname=$_POST['lname'];
-		$age=$_POST['age'];
-		$college=$_POST['college'];
-		$city=$_POST['ccity'];
-		$iview=$_POST['empl'];
-		$n=$_POST['iname'];
-		$i=$_POST['iid'];
-		$e=$_POST['iemail'];
-		$r=$_POST['irole'];
+		$role=$_POST['roles'];		//Type of Role
+		$fname=$_POST['fname'];		//First Name
+		$lname=$_POST['lname'];		//Last Name
+		$age=$_POST['age'];			//Age
+		$college=$_POST['college']; //College
+		$city=$_POST['ccity'];		//City
+		$iview=$_POST['empl'];		//Interviewer
 
-		$year=$_POST['year'];
-		$month=$_POST['month'];
-		$date=$_POST['date'];
-		$hr=$_POST['hr'];
-		$minu=$_POST['minu'];
+		$n=$_POST['iname'];			//New Interviewer
+		$i=$_POST['iid'];			//New Interviewer Id
+		$e=$_POST['iemail'];		//New Interviewer Email
+		$r=$_POST['irole'];			//New Interviewer Role
 
-		$fullname=$_FILES["file"]["name"];
+		$year=$_POST['year'];		//Year of interview
+		$month=$_POST['month'];		//Month of Interview
+		$date=$_POST['date'];		//Date of Interview
+		$hr=$_POST['hr'];			//Hour of Interview
+		$minu=$_POST['minu'];		//Minutes of Interview
 
-		$email="no";
-		if(isset($_POST['smail'])){
-			$email=$_POST['smail'];
-		}
+		$fullname=$_FILES["file"]["name"];		//Resume Path
+
 
 		$filename="";
 		$resok=0;
@@ -45,77 +42,69 @@
 
 		//Resume Check
 
-			$split=explode(".",$fullname);
-
-			$name=$split[0];
-			//$ext=$split[1];
-			$ext=end($split);
-
-			//echo $fullname."<br>";
-
-			//echo $name." . ".$ext."<br>";
+		$split=explode(".",$fullname);
+		$name=$split[0];
+		$ext=end($split);		//Taking last segment as extension
 
 
-				if(   ( $_FILES["file"]["type"]=="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-				        || $_FILES["file"]["type"]=="application/msword"
-				        || $_FILES["file"]["type"]=="application/pdf"
-				      )
-					   && ($_FILES["file"]["size"]<2000000)
-					   && in_array($ext, $allext)
-				   ){
+
+		if(   ( $_FILES["file"]["type"]=="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+				    || $_FILES["file"]["type"]=="application/msword"
+				    || $_FILES["file"]["type"]=="application/pdf"
+			  )
+			  && ($_FILES["file"]["size"]<2000000)
+			  && in_array($ext, $allext)
+		  )
+		  {
 
 
-				   		if ($_FILES["file"]["error"]>0)
-						{
-					   		//echo "Error Code: " .$_FILES["file"]["error"]."<br>";
+				if ($_FILES["file"]["error"]>0)
+				{
+					$resok=0;
+					$resmsg="Error Code: " .$_FILES["file"]["error"]."<br>";
+				}
+				else{
+						//If No File Error
 
-					   		$resok=0;
-					   		$resmsg="Error Code: " .$_FILES["file"]["error"]."<br>";
-					   		//return ;
-						}
-						else{
+						$finalname=$name.".".$ext;
+						if(file_exists($path.$finalname))
+			    		{ 
+			    		 	//" already Exists"
+			    		 	$ranval=mt_rand(1,10000);
+			    		 	$finalname=$name."-".$ranval.".".$ext;
 
-									$finalname=$name.".".$ext;
-								if(file_exists($path.$finalname))
-			    				{ 
-			    		 			//" already Exists"
-			    		 			$ranval=mt_rand(1,10000);
-			    		 			$finalname=$name."-".$ranval.".".$ext;
+			    		 	move_uploaded_file($_FILES["file"]["tmp_name"], $path.$finalname);
+			    		 	//echo $finalname." Uploaded.. <br>";
+			    		 	$resok=1;
+			    		 	$resmsg="<span class='holder'>Resume:</span> <span class='value'><a href='".$path.$finalname."' target='_blank' >".$finalname."</a></span><br>";
 
-			    		 			move_uploaded_file($_FILES["file"]["tmp_name"], $path.$finalname);
-			    		 			//echo $finalname." Uploaded.. <br>";
-			    		 			$resok=1;
-			    		 			$resmsg="<span class='holder'>Resume:</span> <span class='value'><a href='".$path.$finalname."' target='_blank' >".$finalname."</a></span><br>";
+			    		 	//echo "Resume: <a href='".$path.$finalname."'>".$finalname."</a><br>";
+			    		}
+			    		else
+			    		{
+			    		   	move_uploaded_file($_FILES["file"]["tmp_name"],$path.$finalname);
 
-			    		 			//echo "Resume: <a href='".$path.$finalname."'>".$finalname."</a><br>";
-			    				}
-			    				else
-			    		  		{
-			    		   			move_uploaded_file($_FILES["file"]["tmp_name"],$path.$finalname);
-			    		   			//echo $finalname." uploaded...<br>";
-
-			    		   			$resok=1;
-			    		   			$resmsg="<span class='holder'>Resume:</span> <span class='value'> <a href='".$path.$finalname."' target='_blank' >".$finalname."</a></span><br>";
-			    		   			//echo "Resume: <a href='".$path.$finalname."'>".$finalname."</a><br>";
-			    		   		}
-						}
-
+			    		   	$resok=1;
+			    		   	$resmsg="<span class='holder'>Resume:</span> <span class='value'> <a href='".$path.$finalname."' target='_blank' >".$finalname."</a></span><br>";
+			    		   	//echo "Resume: <a href='".$path.$finalname."'>".$finalname."</a><br>";
+			    		}
+					
 					}
-					else{
 
-
-							echo "Only .doc .docx .pdf and smaller than 2MB allowed ..!!<br>";
+			}
+			else{
 							$resok=0;
-							//return;
-					}
+							$resmsg="Only .doc .docx .pdf and smaller than 2MB allowed ..!!<br>";
+			}
 
 		if($resok==0){
 			echo $resmsg;
 			return ;
 		}
-	?>
 
-	<!DOCTYPE HTML>
+?>
+
+<!DOCTYPE HTML>
 
 <html>
 <head>
@@ -129,20 +118,17 @@
 
 <body>
 	<script >
-			//NProgress.start();
+		NProgress.start();
 	</script>
 
 	<div id="top-bar">	
-
 	</div>
 
-		<div id="header"> Interview Schedule</div><br>
-		<div id="can_details">
+	<div id="header"> Interview Schedule</div><br>
+	<div id="can_details">
 	<?php
 
-		//echo "Send Email?? :".$email."<br>";
-
-		//Show Details
+		//Show Details of Interview
 	    echo "<span class='holder'>Candidate Name :</span> <span class='value'>".$fname." ".$lname."</span><br>";
 		echo "<span class='holder'>Role :</span> <span class='value'>".$role."</span><br>";
 		echo "<span class='holder'>Age :</span> <span class='value'>".$age."</span><br>";
@@ -157,38 +143,31 @@
 		//echo $indate."<br>";
 		echo "<span class='holder'>Interview to be Scheduled On:</span> ".date("d/m/Y",$indate)."</span><br>";
 		echo "<span class='holder'>Time:</span> ".date("h:i:s",$indate)."</span><br>";
-	?>
-	</div>
-	<?php
-		
+	
+	echo "</div>";		//can_details
 
 		$name=$fname."-".$lname;
-
 		$ppath=$path.$finalname;
-
 		$id=$iview."-".$indate;
-
+	
 			
-			
-				$q="INSERT INTO interview(id,role,empl,dt,res,name,age,city,coll) VALUES (?,?,?,?,?,?,?,?,?)";
+		$q="INSERT INTO interview(id,role,empl,dt,res,name,age,city,coll) VALUES (?,?,?,?,?,?,?,?,?)";
+		//echo $q."<br>";
 				
-
-				//echo $q."<br>";
-				
-				if($stmt=mysqli_prepare($con,$q)){
+		if($stmt=mysqli_prepare($con,$q)){
 					
 
-						mysqli_stmt_bind_param($stmt, "ssssssdss",$id,$role,$iview,$indate,$ppath,$name,$age,$city,$college);
+			mysqli_stmt_bind_param($stmt, "ssssssdss",$id,$role,$iview,$indate,$ppath,$name,$age,$city,$college);
 
+				if (mysqli_stmt_execute($stmt)) {
+        			
+        			//Successfully Written to db
+					echo "<div class='sche'> <center><h4> Interview Scheduled !</h4>"."<br>";
+					//echo "Feedback: <a href='fback.php?check=".$id."' target='_blank'>Link</a>"."<br><center></div>";
+					echo "Feedback: <a href='demofback.php?check=".$id."' target='_blank'>Link</a>"."<br><center></div>";
 
-						if (mysqli_stmt_execute($stmt)) {
-        						
-									echo "<div class='sche'> <center><h4> Interview Scheduled !</h4>"."<br>";
-									//echo "Feedback: <a href='fback.php?check=".$id."' target='_blank'>Link</a>"."<br><center></div>";
-									echo "Feedback: <a href='demofback.php?check=".$id."' target='_blank'>Link</a>"."<br><center></div>";
-
-    					}
-    					else{
+    			}
+    			else{
     						$error = mysqli_stmt_error($stmt);
 
     						//echo "Error :".$error."<br>";
@@ -199,7 +178,8 @@
 									echo "<div class='sche'> <center><h4> Error: Interview already scheuled with interviewer at this time !</h4><br></center></div>";
 							}
 							else{
-								echo "Error: ";
+								echo "<div class='sche'> <center><h4> Error: ".$error." !</h4><br></center></div>";
+								echo "Try Again !";
 							}
     					}
 				
@@ -207,6 +187,8 @@
 				}
 				else{
 					$error=mysqli_error($con);
+					echo "<div class='sche'> <center><h4> Error: ".$error." !</h4><br></center></div>";
+					echo "Try Again !";
 				}
 				
 
@@ -246,7 +228,7 @@
 ?>
 
 <script >
-			//NProgress.done();
-	</script>
+			NProgress.done();
+</script>
 </body>
 </html>
