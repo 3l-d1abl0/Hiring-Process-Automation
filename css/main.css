@@ -1,0 +1,235 @@
+@font-face {
+    /*font-family: verdana;*/
+
+}
+html{
+	/*font-family: Corbel; verdana Helvetica tahoma*/
+	font-family: tahoma;
+}
+a{
+    color: #BF0720;
+    text-decoration: none;
+}
+
+#top-bar{
+	margin-top: -8px;
+	margin-left: -8px;
+	/*border-width: 1px;
+	border-style: dashed;*/
+	width:102%;
+	height:50px;
+	/*left:-1;*/
+	background-color: #BF0720;
+}
+#header{
+ 	margin-top: 15px;
+	margin-left: 45%;
+	margin-bottom: 10px;
+	font-size: 25px;
+	/*border-width: 1px;*/
+	/*border-style:solid;*/
+}
+#main{
+	margin-left:30%;
+	/*margin:100px auto auto 100px;*/
+	padding:25px;
+	font-size: 18px ;
+
+}
+#fmain{
+	margin-left: 25%;
+	padding:25px;
+	font-size: 18px ;
+}
+#can_details{
+	margin-left:30%;
+	padding:25px;
+}
+.ans_table{
+	margin-left: 30%;
+	padding: 25px;
+}
+.sche{
+	color: #BF0720;
+}
+#newqerr{
+	margin-left: 65px;
+	color: #BF0720;
+}
+
+
+#cform{
+
+	/*margin-left: 55px;*/
+}
+#fform{
+
+}
+
+/*////
+////*/
+.holder{
+	font-size: 22px;
+	padding: 10px;
+}
+.value{
+	font-size: 20px;
+	padding: 10px;	
+}
+
+#addin{
+	/*margin-left: 0px;*
+	border-style: dashed;
+	border-width: 1px;*/
+	padding: 30px;
+}
+
+#adderrr{
+	color: #BF0720;
+}
+#errr{
+	color: #BF0720;
+}
+
+
+
+#detail{
+	margin-left:30%	;
+	padding: 30px;
+}
+
+
+#quest{
+
+	margin-left: 45px;
+	border-width: 1px;
+	
+	padding:15px;
+}
+#hbox{
+	margin-left: 45px;
+}
+#addqb{
+	margin-left: 65px;
+}
+#hhire{
+	margin-left:45px;
+}
+#sub{
+	margin-left: 45px;
+}
+#addquestion{
+	margin: 20px;
+	margin-left: 45px;
+	padding:15px;
+	/*visibility:hidden;*/
+
+}
+#nxtround{
+	margin-left:45px;
+}
+#newq{
+	width: 550px;
+	height: 50px;
+}
+#addit{
+	width:80px;
+}
+#doneadd{
+	width: 100px;
+}
+
+.ans{
+	width:450px;
+	height:75px;
+}
+.invisible{
+	visibility: hidden;
+}
+/*
+#maxq{
+	visibility:hidden;
+}
+#addi{
+	visibility:hidden;
+}
+#interview_id{
+	visibility: hidden;
+}
+*/
+
+#currid{
+
+}
+
+
+/* For Rating */
+.ratings_stars {
+    background: url('star_empty.png') no-repeat;
+    float:      left;
+    height:     30px;
+    padding:    2px;
+    width:      32px;
+}
+.ratings_vote {
+    background: url('star_highlight.png') no-repeat;
+}
+.ratings_over {
+    background: url('star_full.png') no-repeat;
+}
+
+
+/* For Results */
+
+.default_stars {
+    background: url('star_empty.png') no-repeat;
+    float:      left;
+    height:     30px;
+    padding:    2px;
+    width:      32px;
+}
+
+.new_marks {
+    background: url('star_full.png') no-repeat;
+}
+
+
+
+/*Form Elements*/
+
+
+
+input[type="button"]{
+	height:25px;
+	width:200px;
+	font-size: 15px;
+}
+input[type="submit"]{
+	font-size:15px;
+}
+input[type="file"]{
+	font-size: 12px;
+}
+
+input[type="text"]{
+	font-size:15px;
+	height:20px;
+	width: 200px;
+}
+input[type="number"]{
+	font-size:15px;
+	height:20px;
+	width:200px;
+}
+input[type="email"]{
+	font-size:15px;
+	height: 20px;
+	width:200px;
+}
+input[type="select"]{
+	font-size:15px;
+	height:20px;
+	width: 500px;
+}
+
+

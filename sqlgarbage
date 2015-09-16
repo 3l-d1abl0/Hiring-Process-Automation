@@ -1,0 +1,71 @@
+
+ALTER table empl add role VARCHAR(10);
+
+ALTER table empl ADD PRIMARY KEY(id);
+
+ALTER table ques ADD PRIMARY KEY(qid);
+
+UPDATE empl SET role='tech' WHERE id='E2';
+
+SELECT id,name from empl where role='tech';
+
+INSERT INTO empl(`id`, `Name`, `email`,'role') VALUES ('E78','emp78','e78@zomato.com','sales');
+
+UPDATE `ques` SET `quest`='Rate the Interview' WHERE qid=1;
+
+INSERT INTO ques(qid, quest) VALUES (1,'Rate the Interview');
+
+DELETE FROM ques WHERE qid=3;
+
+
+
+DELETE FROM `interview` WHERE id='E6-1451629920'
+
+
+ALTER table interview add res VARCHAR(20);
+ALTER table interview add name VARCHAR(25);
+ALTER table interview add age INT(5);
+ALTER table interview add city VARCHAR(15);
+ALTER table interview add coll VARCHAR(25);
+
+ALTER TABLE interview ADD COLUMN q1 INT(5) DEFAULT 0;
+ALTER TABLE interview ADD COLUMN addi INT(5) DEFAULT 0;
+
+alter table interview add column hire bool default false;
+alter table interview add column next bool default false;	
+alter table interview add column reject bool default false;
+
+
+ALTER TABLE interview MODIFY dt TIMESTAMP ;
+alter table interview drop column id;
+
+ALTER table interview add id VARCHAR(15);
+ALTER table interview ADD PRIMARY KEY(id);
+
+SELECT 1 FROM ques LIMIT 1;
+
+SELECT * 
+FROM information_schema.tables
+WHERE table_schema = 'rec' 
+    AND table_name = 'ques'
+LIMIT 1;
+
+SHOW TABLES like 'ques';
+
+CREATE TABLE qww (
+	id INT(5),
+	ques varchar(100),
+	ans int(5)
+)
+
+CREATE TABLE temp ( id INT(5), ques varchar(100), ans int(5) )	
+
+SELECT quest FROM `ques` ORDER BY qid DESC
+
+
+INSERT INTO interview(id,role,empl,dt,res,name,age,city,coll) VALUES ('E6-1451736000','sales','E6','1451736000','res/296333333-pdfSample.pdf','Ajit-Ganguly','24','Jamnagar','MNIT')
+
+
+select t.name,t.age,s.name from interview t, empl s where t.empl=s.id;
+
+

@@ -1,0 +1,13 @@
+.ratings_stars {
+    background: url('star_empty.png') no-repeat;
+    float:      left;
+    height:     20px;
+    padding:    2px;
+    width:      32px;
+}
+.ratings_vote {
+    background: url('star_full.png') no-repeat;
+}
+.ratings_over {
+    background: url('star_highlight.png') no-repeat;
+}
